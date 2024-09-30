@@ -1,0 +1,93 @@
+nw, n, ne, w, m, e, sw, s, se = '-', '-', '-', '-', '-', '-', '-', '-', '-'
+
+# Set up player info
+player_num = 1
+player_symbol = 'X'
+winner = None
+
+# Start game loop
+for i in range(9):
+    # Get location from user and update board variable
+    valid = False
+    while not valid:
+        # Assume we'll get a valid input
+        valid = True
+        # Get input from user
+        loc = input(f'Player {player_num}, enter the number representing the location to place your {player_symbol} (1-9): ')
+        # Update the variable representing the location if not already set
+        if loc == '1' and nw == '-':
+            nw = player_symbol
+        elif loc == '2' and n == '-':
+            n = player_symbol
+        elif loc == '3' and ne == '-':
+            ne = player_symbol
+        elif loc == '4' and w == '-':
+            w = player_symbol
+        elif loc == '5' and m == '-':
+            m = player_symbol
+        elif loc == '6' and e == '-':
+            e = player_symbol
+        elif loc == '7' and sw == '-':
+            sw = player_symbol
+        elif loc == '8' and s == '-':
+            s = player_symbol
+        elif loc == '9' and se == '-':
+            se = player_symbol
+        else:
+            print('That is not a valid input, try again')
+            # It wasn't valid, so we flip this to false to continue the loop
+            valid = False
+    # Add a blank line to space things out
+    print()
+
+    # Display the current state of the
+    print('Here is the state of the board:')
+    print(f'{nw} {n} {ne}')
+    print(f'{w} {m} {e}')
+    print(f'{sw} {s} {se}')
+
+    # Check if any of the possible lines are all the same non-empty value
+
+    # Check each horizontal line
+    if nw != '-' and nw == n and n == ne:
+        winner = nw
+    if w != '-' and w == m and m == e:
+        winner = w
+    if sw != '-' and sw == s and s == se:
+        winner = sw
+
+    # Check each vertical
+    if nw != '-' and nw == w and w == sw:
+        winner = nw
+    if n != '-' and n == m and m == s:
+        winner = n
+    if ne != '-' and ne == e and e == se:
+        winner = ne
+
+    # Check the diagonals
+    if nw != '-' and nw == m and m == se:
+        winner = nw
+    if ne != '-' and ne == m and m == sw:
+        winner = ne
+
+    # If there is a winner, say who and stop the game loop
+    if winner:
+        if (winner == 'X'):
+            print('Player 1 wins!')
+        else:
+            print('Player 2 wins!')
+        break
+
+    # Add a blank line to space things out
+    print()
+
+    # Toggle current player
+    if player_symbol == 'X':
+        player_symbol = 'O'
+        player_num = 2
+    else:
+        player_symbol = 'X'
+        player_num = 1
+
+if not winner:
+    print('Tied game!')
